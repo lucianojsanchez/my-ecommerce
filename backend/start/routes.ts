@@ -9,4 +9,8 @@
 
 import router from '@adonisjs/core/services/router'
 
-router.get('/', async () => 'It works!')
+router.get('/', async () => {
+  return {
+    hello: 'world',
+  }
+})
