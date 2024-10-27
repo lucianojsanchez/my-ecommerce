@@ -33,5 +33,14 @@ export default class Product extends BaseModel {
   public isActive: boolean = false
 
   @column()
-  public image_url: string = ''
+  public manufacturer?: string | null
+
+  @column()
+  public image_url_1?: string | null
+
+  @column()
+  public image_url_2?: string | null
+
+  @column()
+  public image_url_3?: string | null
 }

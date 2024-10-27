@@ -12,7 +12,6 @@ export default class extends BaseSchema {
       table.integer('stock').defaultTo(0)
       table.integer('volume').notNullable()
       table.string('type').notNullable()
-      table.string('image_url')
       table.boolean('is_active').defaultTo(true)
       table.timestamp('created_at')
       table.timestamp('updated_at')
