@@ -40,6 +40,9 @@ export default class ProductsController {
       product.stock = request.input('stock')
       product.volume = request.input('volume')
       product.type = request.input('type')
+      product.manufacturer_id = request.input('manufacturer_id')
+      product.bulkUnits = request.input('bulkUnits')
+      //use images as key on body form to actually do http request.
       product.image_url_1 = imagePaths[0] || null
       product.image_url_2 = imagePaths[1] || null
       product.image_url_3 = imagePaths[2] || null
@@ -90,7 +93,8 @@ export default class ProductsController {
       product.stock = request.input('stock') || product.stock
       product.volume = request.input('volume') || product.volume
       product.type = request.input('type') || product.type
-      product.type = request.input('manofacturer') || product.manufacturer
+      product.manufacturer_id = request.input('manufacturer_id') || product.manufacturer_id
+      product.bulkUnits = request.input('bulkUnits') || product.bulkUnits
       // keeps the old image, dont set the value as null
       product.image_url_1 = imagePaths[0] || product.image_url_1
       product.image_url_2 = imagePaths[1] || product.image_url_2
@@ -109,6 +113,17 @@ export default class ProductsController {
       await product.delete()
     } catch (error) {
       return response.status(404).json({ error: 'product not found' })
+    }
+  }
+
+  // purely for dev reasons, todo: implement image erasing as well
+
+  async erase({ response }: HttpContext) {
+    try {
+      await Product.query().delete()
+      return response.status(200).json({ message: 'all products deleted successfully' })
+    } catch {
+      return response.status(400).json({ error: 'products cannot be deleted' })
     }
   }
 }

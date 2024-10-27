@@ -9,6 +9,7 @@
 
 import router from '@adonisjs/core/services/router'
 import ProductsController from '#controllers/products_controller'
+import ManufacturersController from '#controllers/manufacturers_controller'
 
 router.get('/', async () => {
   return {
@@ -17,3 +18,6 @@ router.get('/', async () => {
 })
 
 router.resource('products', ProductsController).apiOnly()
+router.resource('manufacturer', ManufacturersController).apiOnly()
+
+/* router.delete('clean', [ProductsController, 'erase']) */

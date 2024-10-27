@@ -1,5 +1,8 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
+import Manufacturer from './manufacturer.js'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import { belongsTo } from '@adonisjs/lucid/orm'
 
 export default class Product extends BaseModel {
   @column({ isPrimary: true })
@@ -33,9 +36,6 @@ export default class Product extends BaseModel {
   public isActive: boolean = false
 
   @column()
-  public manufacturer?: string | null
-
-  @column()
   public image_url_1?: string | null
 
   @column()
@@ -43,4 +43,13 @@ export default class Product extends BaseModel {
 
   @column()
   public image_url_3?: string | null
+
+  @column()
+  public manufacturer_id: number = 0
+
+  @column()
+  public bulkUnits: number = 1
+
+  @belongsTo(() => Manufacturer)
+  public manufacturer!: BelongsTo<typeof Manufacturer>
 }
