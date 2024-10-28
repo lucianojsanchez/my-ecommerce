@@ -23,11 +23,8 @@ export default class CartsController {
 
   async show({ params, response }: HttpContext) {
     try {
-      const cart = await Cart.query()
-        .where('id', params.id)
-        .preload('items') // Precargar los artículos del carrito
-        .firstOrFail() // Lanza un error si no se encuentra el carrito
-
+      const cart = await Cart.findOrFail(params.id)
+      await cart.load('items')
       return response.status(200).json({ data: cart })
     } catch (error) {
       return response.status(400).json({ error: 'cart not found' })
