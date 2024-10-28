@@ -41,7 +41,7 @@ export default class ProductsController {
       product.volume = request.input('volume')
       product.type = request.input('type')
       product.manufacturer_id = request.input('manufacturer_id')
-      product.bulkUnits = request.input('bulkUnits')
+      product.bulk_units = request.input('bulk_units')
       //use images as key on body form to actually do http request.
       product.image_url_1 = imagePaths[0] || null
       product.image_url_2 = imagePaths[1] || null
@@ -49,10 +49,10 @@ export default class ProductsController {
 
       await product.save()
 
-      return response.status(201).json({ message: 'product created', data: product })
+      return response.status(200).json({ message: 'product created successfully', data: product })
     } catch (error) {
       console.error(error)
-      return response.status(500).json({ error: 'program failed to create the product' })
+      return response.status(400).json({ error: 'error while creating the product' })
     }
   }
 
@@ -94,7 +94,7 @@ export default class ProductsController {
       product.volume = request.input('volume') || product.volume
       product.type = request.input('type') || product.type
       product.manufacturer_id = request.input('manufacturer_id') || product.manufacturer_id
-      product.bulkUnits = request.input('bulkUnits') || product.bulkUnits
+      product.bulk_units = request.input('bulk_units') || product.bulk_units
       // keeps the old image, dont set the value as null
       product.image_url_1 = imagePaths[0] || product.image_url_1
       product.image_url_2 = imagePaths[1] || product.image_url_2
@@ -103,7 +103,7 @@ export default class ProductsController {
 
       return response.status(200).json({ message: 'product updated', data: product })
     } catch (error) {
-      return response.status(404).json({ error: 'product not found' })
+      return response.status(400).json({ error: 'product not found' })
     }
   }
 
@@ -111,8 +111,9 @@ export default class ProductsController {
     try {
       const product = await Product.findByOrFail('id', params.id)
       await product.delete()
+      return response.status(200).json({ message: 'product deleted successfully' })
     } catch (error) {
-      return response.status(404).json({ error: 'product not found' })
+      return response.status(400).json({ error: 'product not found' })
     }
   }
 
